@@ -1,0 +1,74 @@
+//indexキーの使用＆他の配列の参照
+//@eachは現在のインデックスを返す機能が標準搭載されていないが、index関数を使うことで取得可能
+//インデックス番号をbeforeやafterのcontentに設定することで装飾可能な数字が表示できる
+//また、取得したインデックスとnth関数で別の配列の値も参照可能
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?52acbo');
+  src:  url('fonts/icomoon.eot?52acbo#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?52acbo') format('truetype'),
+    url('fonts/icomoon.woff?52acbo') format('woff'),
+    url('fonts/icomoon.svg?52acbo#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$boxH: 120px;
+$iconW: 200px;
+$white: #fff;
+
+@mixin pseudoStyle{
+  position: absolute;
+  left: 0;
+  text-align: center;
+  width: $iconW;
+  height: $boxH;
+}
+
+$colors: #F57C00, #FBC02D ,#689F38, #00796B, #0288D1;
+$icons: '\e904', '\e901', '\e902', '\e900', '\e903';
+
+.numberList{
+  position: relative;
+  height: $boxH;
+  list-style-type: none;
+	line-height: 1;
+  @each $color in $colors{
+    $index: index($colors, $color);
+    $icon: nth($icons, $index);
+    &:nth-child(#{$index}){
+      &:before{
+        @include pseudoStyle;
+        content: $icon;
+        color: $color;
+        font-family: 'icomoon';
+        top: -30px;
+        font-size: 200px;
+      }
+      &:after{
+        @include pseudoStyle;
+        content: '#{$index}';
+        color: $white;
+        text-shadow: 
+          0 3px 1px $color,
+          3px 0 1px $color,
+          0 -3px 1px $color,
+          -3px 0 1px $color,
+          -3px -3px 1px $color,
+          3px -3px 1px $color,
+          -3px 3px 1px $color,
+          3px 3px 1px $color;
+        top: 0;
+        font-size: 120px;
+      }
+    }
+  }
+}
+.pref{
+  margin-left: $iconW + 30;
+  height: $boxH;
+}
+.prefTitle{
+  font-size: 80px;
+  line-height: 160%;
+}
